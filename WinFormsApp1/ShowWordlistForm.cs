@@ -5,6 +5,8 @@ namespace WinFormsApp1
     public partial class ShowWordlistForm : Form
     {
         private string[] lists;
+        private WordList loadedList;
+        private int selectedLanguage;
         public ShowWordlistForm()
         {
             InitializeComponent();
@@ -27,20 +29,31 @@ namespace WinFormsApp1
 
         private void listboxWordlists_SelectedIndexChanged(object sender, EventArgs e)
         {
-            WordList loadedList = WordList.LoadList(lists[listboxWordlists.SelectedIndex]);
-            listBoxLanguages.Items.Clear();
-            foreach (string language in loadedList.Languages)
+            int index = listboxWordlists.SelectedIndex;
+            if (index >= 0)
             {
-                listBoxLanguages.Items.Add(language);
+                loadedList = WordList.LoadList(lists[index]);
+                listBoxLanguages.Items.Clear();
+                foreach (string language in loadedList.Languages)
+                {
+                    listBoxLanguages.Items.Add(language);
+                }
+                UpdateWordCountLabel();
+                btnPractice.Enabled = true;
             }
-            // this.Text = lists[listboxWordlists.SelectedIndex]; 
-
         }
 
         private void listBoxLanguages_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            selectedLanguage = listBoxLanguages.SelectedIndex;
+            UpdateTranslationListBox();
         }
+
+        public void AddTranslationToListBox(string[] translations)
+        {
+            listBoxtranslations.Items.Add(translations[selectedLanguage]);
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -58,14 +71,50 @@ namespace WinFormsApp1
         {
             if (listboxWordlists.SelectedItem != null)
             {
-                AddWordsForm addWordsForm = new(listboxWordlists.SelectedItem.ToString());
+                AddWordsForm addWordsForm = new(loadedList);
                 addWordsForm.ShowDialog();
+                UpdateWordCountLabel();
+                UpdateTranslationListBox();
             }
         }
 
-        private void btnReload_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            Loadlists();
+            loadedList.Save();
+            Close();
+        }
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            string wordToRemove = listBoxtranslations.SelectedItem.ToString();
+            loadedList.Remove(selectedLanguage, wordToRemove);
+            listBoxtranslations.Items.RemoveAt(listBoxtranslations.SelectedIndex);
+            btnRemove.Enabled = false;
+        }
+
+        private void UpdateWordCountLabel()
+        {
+            lbWordCount.Text = $"Word count: {loadedList.Count().ToString()}";
+        }
+
+        private void UpdateTranslationListBox()
+        {
+            listBoxtranslations.Items.Clear();
+            loadedList.List(selectedLanguage, AddTranslationToListBox);
+        }
+
+        private void listBoxtranslations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnRemove.Enabled = true;
+        }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnPractice_Click(object sender, EventArgs e)
+        {
+            Form1 practiceForm = new Form1(loadedList);
+            practiceForm.ShowDialog();
         }
     }
 }

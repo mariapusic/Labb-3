@@ -36,31 +36,34 @@
             // gbLanguages
             // 
             this.gbLanguages.Controls.Add(this.btnSave);
-            this.gbLanguages.Location = new System.Drawing.Point(-1, 12);
+            this.gbLanguages.Location = new System.Drawing.Point(-1, 14);
             this.gbLanguages.Name = "gbLanguages";
-            this.gbLanguages.Size = new System.Drawing.Size(348, 149);
+            this.gbLanguages.Size = new System.Drawing.Size(348, 169);
             this.gbLanguages.TabIndex = 2;
             this.gbLanguages.TabStop = false;
             this.gbLanguages.Text = "Add word";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(267, 120);
+            this.btnSave.Location = new System.Drawing.Point(267, 136);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(75, 26);
             this.btnSave.TabIndex = 0;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Add";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // AddWordsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(365, 194);
+            this.BackColor = System.Drawing.Color.Turquoise;
+            this.ClientSize = new System.Drawing.Size(358, 196);
             this.Controls.Add(this.gbLanguages);
+            this.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Name = "AddWordsForm";
-            this.Text = "AddWordsForm";
+            this.Text = "AddWords";
             this.Load += new System.EventHandler(this.AddWordsForm_Load);
             this.gbLanguages.ResumeLayout(false);
             this.ResumeLayout(false);

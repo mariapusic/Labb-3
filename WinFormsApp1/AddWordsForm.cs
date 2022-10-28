@@ -6,10 +6,10 @@ namespace WinFormsApp1
     {
         private WordList _wordList;
         private List<TextBox> textBoxes = new();
-        public AddWordsForm(string listName)
+        public AddWordsForm(WordList wordList)
         {
             InitializeComponent();
-            _wordList = WordList.LoadList(listName);
+            _wordList = wordList;
         }
 
         private void AddWordsForm_Load(object sender, EventArgs e)
@@ -38,7 +38,6 @@ namespace WinFormsApp1
                 translations.Add(textbox.Text);
             }
             _wordList.Add(translations.ToArray());
-            _wordList.Save();
             Close();
         }
     }
